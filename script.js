@@ -171,7 +171,11 @@ class Player {
     //ctx.fillStyle = "blue";
     //ctx.fillRect(this.x - this.cx, this.y - this.cy, this.width, this.height);
     let img = document.createElement("img");
-    img.src = "imgs/player.png";
+    if (test) {
+      img.src = "https://raw.githubusercontent.com/RoryPratt/Crystal_Rush/main/imgs/player.png"
+    } else {
+      img.src = "imgs/player.png";
+    }
     //img.style.transform = "rotate(" + Math.floor(this.rotation) + "deg)";
     //img.style.transition = "transform 1s ease";
     //console.log(img.style.transform);

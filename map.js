@@ -1,5 +1,11 @@
 let plats = ["imgs/plat1.png", "imgs/plat2.png", "imgs/plat3.png"];
 
+if (test) {
+  for (plat in plats) {
+    plat = "https://raw.githubusercontent.com/RoryPratt/Crystal_Rush/main/" + plat;
+  }
+}
+
 class Platform {
   constructor(x, y, width, height, color, bounciness) {
     this.x = x;
