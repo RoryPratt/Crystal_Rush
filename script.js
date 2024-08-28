@@ -5,6 +5,7 @@ let gravity = 1.5;
 let KeysPressed = {};
 let friction = 0.8;
 let friction_air = 0.85;
+let fps = 0;
 let lastUpdateTime = Date.now();
 
 /*
@@ -45,6 +46,7 @@ class Player {
     this.tv = 50;
     this.rotation = 0;
     this.isDead = false;
+    this.mass = 5;
   }
 
   restart(spawn) {
@@ -82,7 +84,7 @@ class Player {
     }
   }
 
-  update(platforms) {
+  update(platforms, lastUpdateTime, currentTime) {
     this.move();
     let collidedy = false;
 
@@ -95,12 +97,14 @@ class Player {
       this.vx = this.tv;
     }
 
-    this.vx *= 0.95;
+    //this.vx *= 0.95;
 
     for (let i = 0; i < platforms.length; i++) {
       let platform = platforms[i];
 
       let result = detectCollision(this, this, platform);
+      
+      let fv = ((this.vx * 5) / (2 * this.mass)) * (currentTime - lastUpdateTime) / 100;
 
       if (result.collided) {
         collidedy = true;
@@ -108,13 +112,13 @@ class Player {
         switch (result.side) {
           case "top":
             this.y = platform.y - this.height;
-            this.x += this.vx;
+            this.x += fv;
             if (this.vy > 0) { this.vy *= -platform.bounciness; }
             this.grounded = true;
             break;
           case "bottom":
             this.y = platform.y + platform.height;
-            this.x += this.vx;
+            this.x += fv;
             if (this.vy > 0) { this.vy *= -platform.bounciness; }
             break;
           case "left":
@@ -227,7 +231,7 @@ async function GameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   background.draw();
   EnemyList.forEach(enemy => { enemy.draw(); });
-  player.update(map.platforms);
+  player.update(map.platforms, lastUpdateTime, currentTime);
   player.checkDeath(map.lava, map.spikes);
   map.draw(player.cx, player.cy);
   player.draw();
