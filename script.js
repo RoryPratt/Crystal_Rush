@@ -104,7 +104,7 @@ class Player {
 
       let result = detectCollision(this, this, platform);
       
-      let fv = ((this.vx * 5) / (2 * this.mass)) * (currentTime - lastUpdateTime) / 100;
+      let fv = ((this.vx * 5) / (2 * this.mass)) * (currentTime - lastUpdateTime) / 100 * 60;
 
       if (result.collided) {
         collidedy = true;
