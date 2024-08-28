@@ -46,7 +46,7 @@ class Player {
     this.tv = 50;
     this.rotation = 0;
     this.isDead = false;
-    this.mass = 100;
+    this.mass = 5;
     alert(this.mass);
   }
 
@@ -143,12 +143,16 @@ class Player {
       this.x += this.vx;
       this.y += this.vy;
 
+      this.rotation += this.vx / 25;
+
       this.grounded = false;
+    } else {
+      let fv = ((this.vx * 5) / (2 * this.mass)) * (currentTime - lastUpdateTime) / 100;
+      this.rotation += fv / 25;
     }
     this.cx += (this.x + this.width / 2 - canvas.width / 2 - this.cx) * this.easing;
     this.cy += (this.y + this.height / 2 - canvas.height / 2 - this.cy) * this.easing;
 
-    this.rotation += this.vx / 25;
 
     if (this.rotation / 360 > 1) {
       this.rotation %= 360;
