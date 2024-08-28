@@ -47,6 +47,7 @@ class Player {
     this.rotation = 0;
     this.isDead = false;
     this.mass = 100;
+    alert(this.mass);
   }
 
   restart(spawn) {
